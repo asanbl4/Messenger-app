@@ -22,6 +22,7 @@
 		D014B1292BE03077004196B6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014B1282BE03077004196B6 /* ProfileViewController.swift */; };
 		D014B12C2BE29C4B004196B6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014B12B2BE29C4B004196B6 /* Extensions.swift */; };
 		D014B1312BE4BBFA004196B6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D014B1302BE4BBFA004196B6 /* GoogleService-Info.plist */; };
+		D014B1332BE6898E004196B6 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014B1322BE6898E004196B6 /* DatabaseManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		D014B1282BE03077004196B6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D014B12B2BE29C4B004196B6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D014B1302BE4BBFA004196B6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D014B1322BE6898E004196B6 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 				D014B1032BE02844004196B6 /* AppDelegate.swift */,
 				D014B1052BE02844004196B6 /* SceneDelegate.swift */,
 				D014B12B2BE29C4B004196B6 /* Extensions.swift */,
+				D014B1322BE6898E004196B6 /* DatabaseManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D014B11E2BE02FF7004196B6 /* LoginViewController.swift in Sources */,
+				D014B1332BE6898E004196B6 /* DatabaseManager.swift in Sources */,
 				D014B1202BE03007004196B6 /* RegisterViewController.swift in Sources */,
 				D014B1272BE0305E004196B6 /* NewConversationViewController.swift in Sources */,
 				D014B1082BE02844004196B6 /* ConversationsViewController.swift in Sources */,
