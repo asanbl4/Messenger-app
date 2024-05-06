@@ -21,8 +21,8 @@
 		D014B1272BE0305E004196B6 /* NewConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014B1262BE0305E004196B6 /* NewConversationViewController.swift */; };
 		D014B1292BE03077004196B6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014B1282BE03077004196B6 /* ProfileViewController.swift */; };
 		D014B12C2BE29C4B004196B6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014B12B2BE29C4B004196B6 /* Extensions.swift */; };
-		D014B1312BE4BBFA004196B6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D014B1302BE4BBFA004196B6 /* GoogleService-Info.plist */; };
 		D014B1332BE6898E004196B6 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014B1322BE6898E004196B6 /* DatabaseManager.swift */; };
+		D06C613F2BE9494D00F6B8A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D06C613E2BE9494D00F6B8A6 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,8 +44,8 @@
 		D014B1262BE0305E004196B6 /* NewConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationViewController.swift; sourceTree = "<group>"; };
 		D014B1282BE03077004196B6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D014B12B2BE29C4B004196B6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		D014B1302BE4BBFA004196B6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D014B1322BE6898E004196B6 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		D06C613E2BE9494D00F6B8A6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +81,7 @@
 		D014B1022BE02844004196B6 /* Messenger */ = {
 			isa = PBXGroup;
 			children = (
-				D014B1302BE4BBFA004196B6 /* GoogleService-Info.plist */,
+				D06C613E2BE9494D00F6B8A6 /* GoogleService-Info.plist */,
 				D014B11B2BE02E25004196B6 /* Resources */,
 				D014B11A2BE02E1A004196B6 /* ViewModels */,
 				D014B1192BE02E11004196B6 /* Models */,
@@ -235,7 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D014B10D2BE02846004196B6 /* Assets.xcassets in Resources */,
-				D014B1312BE4BBFA004196B6 /* GoogleService-Info.plist in Resources */,
+				D06C613F2BE9494D00F6B8A6 /* GoogleService-Info.plist in Resources */,
 				D014B1102BE02846004196B6 /* Base in Resources */,
 				D014B10B2BE02844004196B6 /* Base in Resources */,
 			);
@@ -456,6 +456,8 @@
 				DEVELOPMENT_TEAM = Y63PN52S2N;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Messenger/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to take a profile picture";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to select a photo for your profile";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -484,6 +486,8 @@
 				DEVELOPMENT_TEAM = Y63PN52S2N;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Messenger/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to take a profile picture";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to select a photo for your profile";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
