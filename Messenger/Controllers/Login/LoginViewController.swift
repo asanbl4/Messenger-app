@@ -7,8 +7,11 @@
 
 import UIKit
 import FirebaseAuth
+import JGProgressHUD
 
 class LoginViewController: UIViewController {
+    
+    private let spinner = JGProgressHUD(style: .dark)
     // subviews
     private let scrollView: UIScrollView = {
         // ui container for smaller devices to work properly when adding many fields
@@ -35,8 +38,8 @@ class LoginViewController: UIViewController {
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.lightGray.cgColor
-        field.placeholder = "Email Address..."
-        // this is for the placeholder to pop up correctly
+        field.attributedPlaceholder = NSAttributedString(string: "Email address...",
+                                                         attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
         field.backgroundColor = .white
@@ -52,8 +55,8 @@ class LoginViewController: UIViewController {
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.lightGray.cgColor
-        field.placeholder = "Password..."
-        // this is for the placeholder to pop up correctly
+        field.attributedPlaceholder = NSAttributedString(string: "Password...",
+                                                         attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
         field.backgroundColor = .white
@@ -131,10 +134,16 @@ class LoginViewController: UIViewController {
             return
         }
         
+        spinner.show(in: view)
+        
         // FireBase LogIn before logging in delete app from simulator
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] authResult, error in
             guard let strongSelf = self else{
                 return
+            }
+            
+            DispatchQueue.main.async {
+                strongSelf.spinner.dismiss()
             }
             
             guard let result = authResult, error == nil else{
