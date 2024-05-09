@@ -182,6 +182,8 @@ class RegisterViewController: UIViewController {
         presentPhotoActionSheet()
     }
     
+    // Firebase Log In
+    
     @objc private func registerButtonTapped() {
         emailField.resignFirstResponder()
         passwordField.resignFirstResponder()
@@ -203,7 +205,6 @@ class RegisterViewController: UIViewController {
         
         spinner.show(in: view)
         
-        // Firebase Log In
         
         DatabaseManager.shared.userExists(with: email, completion: { [weak self] exists in
             // We use strongself but not self to not leak memory
@@ -216,6 +217,7 @@ class RegisterViewController: UIViewController {
             }
             
             guard !exists else{
+                
                 // user already exists
                 strongSelf.alertUserLoginError(message: "Looks like a user account for that email already exists")
                 return
@@ -227,9 +229,31 @@ class RegisterViewController: UIViewController {
                     return
                 }
                 
-                DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName,
-                                                                    lastName: lastName,
-                                                                    emailAddress: email))
+                let chatUser = ChatAppUser(firstName: firstName,
+                                           lastName: lastName,
+                                           emailAddress: email)
+                
+                DatabaseManager.shared.insertUser(with: chatUser, completion: { success in
+                    if success {
+                        guard let image = strongSelf.imageView.image,
+                              let data = image.pngData() else {
+                            return
+                        }
+                        
+                        let fileName = chatUser.profilePictureFileName
+                        StorageManager.shared.uploadProfilePicture(with: data, fileName: fileName, completion: { result in
+                            switch result {
+                            case.success(let downloadURL):
+                                // UserDefaults is for caching the downloadURL
+                                UserDefaults.standard.set(downloadURL, forKey: "profile_picture_url")
+                                print(downloadURL)
+                            case.failure(let error):
+                                print("Storage manager error: \(error)")
+                            }
+                        })
+                    }
+                    
+                })
                 strongSelf.navigationController?.dismiss(animated: true, completion: nil)
             })
         })
