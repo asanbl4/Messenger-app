@@ -247,6 +247,7 @@ class RegisterViewController: UIViewController {
                                 // UserDefaults is for caching the downloadURL
                                 UserDefaults.standard.set(downloadURL, forKey: "profile_picture_url")
                                 print(downloadURL)
+                                UserDefaults.standard.set(email, forKey: "email")
                             case.failure(let error):
                                 print("Storage manager error: \(error)")
                             }
