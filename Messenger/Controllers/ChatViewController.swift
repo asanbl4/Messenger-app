@@ -61,6 +61,7 @@ class ChatViewController: MessagesViewController {
     public let otherUserEmail: String
     
     private var messages = [Message]()
+    
     private var selfSender: Sender? {
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
             return nil
@@ -113,7 +114,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                               sentDate: Date(),
                               kind: .text(text))
             // create convo in database
-            DatabaseManager.shared.createNewConversation(with: otherUserEmail, firstMessage: message, completion: { success in
+            DatabaseManager.shared.createNewConversation(with: otherUserEmail, name: self.title ?? "User", firstMessage: message, completion: { success in
                 if success {
                     print("message sent \(message)")
                 }
