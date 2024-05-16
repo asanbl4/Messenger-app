@@ -248,6 +248,7 @@ class RegisterViewController: UIViewController {
                                 UserDefaults.standard.set(downloadURL, forKey: "profile_picture_url")
                                 print(downloadURL)
                                 UserDefaults.standard.set(email, forKey: "email")
+                                UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "name")
                             case.failure(let error):
                                 print("Storage manager error: \(error)")
                             }
