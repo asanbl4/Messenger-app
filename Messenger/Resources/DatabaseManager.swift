@@ -145,34 +145,34 @@ extension DatabaseManager {
     
     /*
      "dsaasdf" => {
-        messages: [
-            {
-                "id": String,
-                "type": text/video/photo,
-                "content": String,
-                "date": Date(),
-                "senderEmail": String,
-                "is_read": true/false
-            }
-        ]
+     messages: [
+     {
+     "id": String,
+     "type": text/video/photo,
+     "content": String,
+     "date": Date(),
+     "senderEmail": String,
+     "is_read": true/false
+     }
+     ]
      }
      
      conversation => [
-        [
-            "conversation_id": "dsaasdf",
-            "other_user_email": ,
-            "latest_message" => [
-                                "date": Date(),
-                                "latest_message": Message
-                                "is_read": true/false
-                                ]
-        ],
+     [
+     "conversation_id": "dsaasdf",
+     "other_user_email": ,
+     "latest_message" => [
+     "date": Date(),
+     "latest_message": Message
+     "is_read": true/false
+     ]
+     ],
      ]
      */
     /// Creates a new conversation with taargetUserEmail and first message
     public func createNewConversation(with otherUserEmail: String, name: String, firstMessage: Message, completion: @escaping (Bool) -> Void) {
         guard let currentEmail = UserDefaults.standard.value(forKey: "email") as? String,
-        let currentName = UserDefaults.standard.value(forKey: "name") as? String else {
+              let currentName = UserDefaults.standard.value(forKey: "name") as? String else {
             return
         }
         let safeEmail = DatabaseManager.safeEmail(emailAddress: currentEmail)
@@ -288,14 +288,14 @@ extension DatabaseManager {
     }
     
     private func finishCreatingConversation(conversationId: String, name: String, firstMessage: Message, completion: @escaping (Bool) -> Void) {
-//        {
-//            "id": String,
-//            "type": text/video/photo,
-//            "content": String,
-//            "date": Date(),
-//            "senderEmail": String,
-//            "is_read": true/false
-//        }
+        //        {
+        //            "id": String,
+        //            "type": text/video/photo,
+        //            "content": String,
+        //            "date": Date(),
+        //            "senderEmail": String,
+        //            "is_read": true/false
+        //        }
         let messageDate = firstMessage.sentDate
         let dateString = ChatViewController.dateFormatter.string(from: messageDate)
         
@@ -607,6 +607,49 @@ extension DatabaseManager {
             })
         })
     }
+    
+    public func deleteConversation(conversationId: String, completion: @escaping (Bool) -> Void) {
+        guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
+            return
+        }
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        
+        print("deleting conversation with id \(conversationId)")
+        // Get all conversations for the user
+        // Delete conversation in collection with convId
+        // reset those conversations for the user in database
+        let ref = database.child("\(safeEmail)/conversations")
+        ref.observeSingleEvent(of: .value, with: { snapshot in
+            if var conversations = snapshot.value as? [[String: Any]] {
+                var positionToRemove = 0
+                
+                for conversation in conversations {
+                    if let id = conversation["id"] as? String,
+                       id == conversationId {
+                        print("found conversation at position \(positionToRemove)")
+                        break
+                    }
+                    positionToRemove += 1
+                }
+                
+                conversations.remove(at: positionToRemove)
+                ref.setValue(conversations, withCompletionBlock: { error, _ in
+                    guard error == nil else {
+                        completion(false)
+                        print("failed to write new conv array")
+                        return
+                    }
+                    print("deleted conversation successfully")
+                    completion(true)
+                })
+            }
+            else {
+                return
+            }
+            
+        })
+    }
+    
 }
 
 
