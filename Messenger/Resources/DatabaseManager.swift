@@ -614,7 +614,6 @@ extension DatabaseManager {
                                     databaseEntryConversations = otherUserConversations
                                 }
                                 else {
-                                    // failed to find current in collection
                                     let newConversationData: [String: Any] = [
                                         "id": conversationId,
                                         "other_user_email": DatabaseManager.safeEmail(emailAddress: currentEmail),
@@ -629,7 +628,7 @@ extension DatabaseManager {
                                 // current collection DNE
                                 let newConversationData: [String: Any] = [
                                     "id": conversationId,
-                                    "other_user_email": DatabaseManager.safeEmail(emailAddress: otherUserEmail),
+                                    "other_user_email": DatabaseManager.safeEmail(emailAddress: currentEmail),
                                     "name": currentName,
                                     "latest_message": updatedValue,
                                 ]
