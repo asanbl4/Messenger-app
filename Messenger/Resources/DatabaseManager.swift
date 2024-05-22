@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseDatabase
 import MessageKit
+import CoreLocation
 
 final class DatabaseManager {
     
@@ -398,17 +399,18 @@ extension DatabaseManager {
                 return
             }
             // This is for converting dictionary in db to array
-            let messages: [Message] = value.compactMap({ dictionary in
-                guard let name = dictionary["name"] as? String,
-                      let isRead = dictionary["is_read"] as? Bool,
-                      let messageId = dictionary["id"] as? String,
-                      let content = dictionary["content"] as? String,
-                      let senderEmail = dictionary["senderEmail"] as? String,
-                      let dateString = dictionary["date"] as? String,
-                      let type = dictionary["type"] as? String,
-                      let date = ChatViewController.dateFormatter.date(from: dateString) else {
-                    return nil
-                }
+            let messages: [Message] = value.compactMap { (dictionary: [String: Any]) -> Message? in
+                    guard let name = dictionary["name"] as? String,
+                              let isRead = dictionary["is_read"] as? Bool,
+                              let messageId = dictionary["id"] as? String,
+                              let content = dictionary["content"] as? String,
+                              let senderEmail = dictionary["senderEmail"] as? String,
+                              let dateString = dictionary["date"] as? String,
+                              let type = dictionary["type"] as? String,
+                              let date = ChatViewController.dateFormatter.date(from: dateString) else {
+                            
+                            return nil
+                        }
                 var kind: MessageKind?
                 if type == "photo" {
                     guard let imageUrl = URL(string: content),
@@ -433,6 +435,17 @@ extension DatabaseManager {
                                       size: CGSize(width: 300, height: 300))
                     kind = .video(media)
                 }
+                else if type == "location" {
+                    let locationComponents = content.components(separatedBy: ", ")
+                    guard let longitute = Double(locationComponents[0]),
+                          let latitude = Double(locationComponents[1]) else {
+                        return nil
+                    }
+                    let location = Location(location: CLLocation(latitude: latitude,
+                                                                 longitude: longitute),
+                                            size: CGSize(width: 300, height: 300))
+                    kind = .location(location)
+                }
                 else {
                     kind = .text(content)
                 }
@@ -448,7 +461,7 @@ extension DatabaseManager {
                                messageId: messageId,
                                sentDate: date,
                                kind: finalKind)
-            })
+            }
             
             completion(.success(messages))
             
@@ -489,11 +502,15 @@ extension DatabaseManager {
                 if let targetUrlString = mediaItem.url?.absoluteString {
                     message = targetUrlString
                 }
+                break
             case .video(let mediaItem):
                 if let targetUrlString = mediaItem.url?.absoluteString {
                     message = targetUrlString
                 }
-            case .location(_):
+                break
+            case .location(let locationData):
+                let location = locationData.location
+                message = "\(location.coordinate.longitude), \(location.coordinate.latitude)"
                 break
             case .emoji(_):
                 break
