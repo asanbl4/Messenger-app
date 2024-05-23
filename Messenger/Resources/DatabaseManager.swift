@@ -25,7 +25,7 @@ final class DatabaseManager {
 
 extension DatabaseManager {
     public func getDataFor(path: String, completion: @escaping (Result<Any, Error>) -> Void) {
-        self.database.child("\(path)").observeSingleEvent(of: .value, with: { snapshot in
+        database.child("\(path)").observeSingleEvent(of: .value, with: { snapshot in
             guard let value = snapshot.value else {
                 completion(.failure(DatabaseError.failedToFetch))
                 return
@@ -59,7 +59,11 @@ extension DatabaseManager {
         database.child(user.safeEmail).setValue([
             "first_name": user.firstName,
             "last_name": user.lastName,
-        ], withCompletionBlock: { error, _ in
+        ], withCompletionBlock: { [weak self] error, _ in
+            guard let strongSelf = self else {
+                return
+            }
+            
             guard error == nil else{
                 print("failed to write into database")
                 completion(false)
@@ -67,7 +71,7 @@ extension DatabaseManager {
             }
             
             // add the user into users collection
-            self.database.child("users").observeSingleEvent(of: .value, with: { snapshot in
+            strongSelf.database.child("users").observeSingleEvent(of: .value, with: { snapshot in
                 // [[String: String]] is array of dicts
                 if var usersCollection = snapshot.value as? [[String: String]]{
                     // append to user dictionary
@@ -77,7 +81,7 @@ extension DatabaseManager {
                     ]
                     usersCollection.append(newElement)
                     
-                    self.database.child("users").setValue(usersCollection, withCompletionBlock: { error, _ in
+                    strongSelf.database.child("users").setValue(usersCollection, withCompletionBlock: { error, _ in
                         guard error == nil else {
                             completion(false)
                             return
@@ -94,7 +98,7 @@ extension DatabaseManager {
                         ]
                     ]
                     
-                    self.database.child("users").setValue(newCollection, withCompletionBlock: { error, _ in
+                    strongSelf.database.child("users").setValue(newCollection, withCompletionBlock: { error, _ in
                         guard error == nil else {
                             completion(false)
                             return

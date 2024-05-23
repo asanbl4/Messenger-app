@@ -22,7 +22,7 @@ class LocationPickerViewController: UIViewController {
     init(coordinates: CLLocationCoordinate2D?) {
         self.coordinates = coordinates
         // to make map not pinnable
-        self.isPickable = false
+        self.isPickable = (coordinates == nil)
         super.init(nibName: nil, bundle: nil)
     }
     

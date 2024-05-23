@@ -92,7 +92,7 @@ class ProfileViewController: UIViewController {
         
         let headerView = UIView(frame: CGRect(x: 0,
                                         y: 0,
-                                        width: self.view.width,
+                                        width: view.width,
                                         height: 300))
         headerView.backgroundColor = .link
         
@@ -154,12 +154,12 @@ class ProfileTableViewCell: UITableViewCell {
         switch viewModel.viewModelType {
             
         case .info:
-            self.textLabel?.textAlignment = .left
             // to make it untappable
-            self.selectionStyle = .none
+            textLabel?.textAlignment = .left
+            selectionStyle = .none
         case .logout:
-            self.textLabel?.textColor = .red
-            self.textLabel?.textAlignment = .center
+            textLabel?.textColor = .red
+            textLabel?.textAlignment = .center
         }
     }
 }
