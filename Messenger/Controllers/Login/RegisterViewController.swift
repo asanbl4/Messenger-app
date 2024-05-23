@@ -229,6 +229,9 @@ class RegisterViewController: UIViewController {
                     return
                 }
                 
+                UserDefaults.standard.setValue(email, forKey: "email")
+                UserDefaults.standard.setValue("\(firstName) \(lastName)", forKey: "name")
+                
                 let chatUser = ChatAppUser(firstName: firstName,
                                            lastName: lastName,
                                            emailAddress: email)
@@ -245,10 +248,8 @@ class RegisterViewController: UIViewController {
                             switch result {
                             case.success(let downloadURL):
                                 // UserDefaults is for caching the downloadURL
-                                UserDefaults.standard.set(downloadURL, forKey: "profile_picture_url")
-                                print(downloadURL)
-                                UserDefaults.standard.set(email, forKey: "email")
-                                UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "name")
+                                UserDefaults.standard.setValue(downloadURL, forKey: "profile_picture_url")
+                                
                             case.failure(let error):
                                 print("Storage manager error: \(error)")
                             }

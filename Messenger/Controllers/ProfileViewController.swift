@@ -30,7 +30,6 @@ class ProfileViewController: UIViewController {
         
         tableView.register(ProfileTableViewCell.self,
                            forCellReuseIdentifier: ProfileTableViewCell.identifier)
-        
         data.append(ProfileViewModel(viewModelType: .info,
                                      title: "Name: \(UserDefaults.standard.value(forKey: "name") as? String ?? "No name")",
                                      handler: nil))
@@ -54,7 +53,11 @@ class ProfileViewController: UIViewController {
                     return
                 }
                 
+                UserDefaults.standard.setValue(nil, forKey: "email")
+                UserDefaults.standard.setValue(nil, forKey: "name")
+                
                 do {
+                    print("Successfully cleared cache")
                     try FirebaseAuth.Auth.auth().signOut()
                     
                     let vc = LoginViewController()

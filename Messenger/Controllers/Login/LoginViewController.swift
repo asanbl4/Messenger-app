@@ -164,6 +164,7 @@ class LoginViewController: UIViewController {
                           let lastName = userData["last_name"] as? String else {
                         return
                     }
+                    print(userData)
                     UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "name")
                     
                     
@@ -172,7 +173,6 @@ class LoginViewController: UIViewController {
                 }
             })
             
-            UserDefaults.standard.set(email, forKey: "email")
             UserDefaults.standard.set(email, forKey: "email")
             
             print("Logged in User: \(user)")
