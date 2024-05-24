@@ -16,6 +16,7 @@ final class DatabaseManager {
     static let shared = DatabaseManager()
     
     private init() {}
+    
     private let database = Database.database().reference()
     
     static func safeEmail(emailAddress: String) -> String {
